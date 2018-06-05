@@ -16,8 +16,7 @@ import java.util.Iterator;
 public interface List<T> extends Iterable<T> {
 	/**
 	 * Abstract method used to add
-	 * the given element at the end of the
-	 * current list.
+	 * the given element.
 	 * @param element Generic type reference
 	 * containing the element to add.
 	 */
@@ -61,10 +60,8 @@ public interface List<T> extends Iterable<T> {
 	public boolean contains(Object object);
 	
 	/**
-	 * Abstract method used to get the
-	 * element at the beginning of the
-	 * list without removing it from
-	 * the list.
+	 * Abstract method used to get an element
+	 * from the list.
 	 * @return Shallow copy of a generic
 	 * type T containing the first element
 	 * in the list.
@@ -75,7 +72,8 @@ public interface List<T> extends Iterable<T> {
 	 * Abstract method used to get
 	 * the element at the given index
 	 * inside of the list.
-	 * @param index
+	 * @param index integer value containing the
+	 * index of the element to return.
 	 * @return Shallow copy of a generic type
 	 * T containing the element at the given
 	 * index.
@@ -117,13 +115,12 @@ public interface List<T> extends Iterable<T> {
 	public Iterator<T> iterator();
 	
 	/**
-	 * Abstract method used to remove the element
-	 * at the end of the list.
-	 * @return Shallow copy of a generic type
-	 * T containing the element removed at the end of
+	 * Abstract method used to remove an element from
 	 * the list.
-	 * @throws IndexOutOfBoundsException if the array
-	 * is empty.
+	 * @return Shallow copy of a generic type T containing
+	 * the element removed at the given index.
+	 * @throws IndexOutOfBoundsException
+	 * if the list is empty.
 	 */
 	public T remove()
 	throws IndexOutOfBoundsException;
