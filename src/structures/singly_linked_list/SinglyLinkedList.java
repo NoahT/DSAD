@@ -2,13 +2,15 @@ package structures.singly_linked_list;
 
 import java.util.Iterator;
 
+import structures.List;
+
 /**
  * Singly linked list data structure
  * containing basic operations for
  * insertion, removal, and retrieval.
  * @author Noah Teshima
  */
-public class SinglyLinkedList<T> implements Iterable<T> {
+public class SinglyLinkedList<T> implements List<T> {
 	/**
 	 * Private inner class designed
 	 * to hold data and a link to each
@@ -207,32 +209,44 @@ public class SinglyLinkedList<T> implements Iterable<T> {
 	}
 	
 	/**
-	 * Accessor method used to get the
-	 * size of the linked list.
-	 * @return integer value containing
-	 * the size of the linked list.
+	 * Method designed to add the given element
+	 * to the beginning of the linked list.
+	 * @param element Generic reference type T
+	 * to add to the beginning of the linked list.
 	 */
-	public int getSize() {
-		return this.size;
+	@Override
+	public void add(T element) {
+		this.add(0, element);
+	}
+	
+	/**
+	 * Method designed to add the given element
+	 * to the back of the linked list.
+	 * @param element Generic reference type T
+	 * to add to the end of the linked list.
+	 */
+	public void addToBack(T element) {
+		this.add(this.size, element);
 	}
 	
 	/**
 	 * Mutator method used to add the given
 	 * node at the specified index.
-	 * @param data Generic type reference to add to
-	 * the linked list.
 	 * @param index integer value containing
 	 * the location to add the node.
+	 * @param data Generic type reference to add to
+	 * the linked list.
 	 * @throws IndexOutOfBoundsException if the given
-	 * index is out of range [0, index]
+	 * index is out of range [0, size]
 	 */
-	public void add(T data, int index) throws IndexOutOfBoundsException {
+	@Override
+	public void add(int index, T data) throws IndexOutOfBoundsException {
 		Node<T> node = new Node<>(data);
 		if(index < 0 || index > this.size) {
 			throw new IndexOutOfBoundsException();
 		}
 		
-		Node<T> pointer = null;//this.head;
+		Node<T> pointer = null;
 		for(int index2 = 0; index2 < index; index2++) {
 			pointer = (pointer == null)
 					? this.head : pointer.next;
@@ -251,90 +265,104 @@ public class SinglyLinkedList<T> implements Iterable<T> {
 	}
 	
 	/**
-	 * Mutator method designed to add
-	 * the given node to the front of
-	 * the linked list.
-	 * @param node Node reference containing
-	 * the node to add to the front of the
-	 * list.
-	 * @throws IndexOutOfBoundsException if the given
-	 * index is out of range [0, index]
-	 */
-	public void addToFront(T data) throws IndexOutOfBoundsException {
-		this.add(data, 0);
-	}
-	
-	/**
-	 * Mutator method designed to add the
-	 * given node to the back of the
-	 * linked list.
-	 * @param data Generic type reference for
-	 * the node to add to the back of the
-	 * list.
-	 * @throws IndexOutOfBoundsException if the given
-	 * index is out of range [0, size]
-	 */
-	public void addToBack(T data) throws IndexOutOfBoundsException {
-		this.add(data, this.size);
-	}
-	
-	/**
-	 * Mutator method designed to remove the node at
-	 * the given index from the linked list.
-	 * @param index integer value containing
-	 * the index to remove
-	 * @throws IndexOutOfBoundsException if the
-	 * given index is out of range [0, size)
-	 */
-	public void remove(int index) throws IndexOutOfBoundsException {
-		if(index < 0 || index > size - 1) {
-			throw new IndexOutOfBoundsException();
-		}
-		
-		Node<T> pointer = null;
-		
-		for(int index2 = 0; index2 < index; index2++) {
-			pointer = (pointer == null)
-					? this.head : pointer.next;
-		}
-		//index 0, so remove current head
-		if(pointer == null) {
-			this.head = this.head.next;
-		}else {
-			pointer.next = pointer.next.next;
-		}
-		
-		this.size--;
-	}
-	
-	/**
-	 * Mutator method designed to remove the head
-	 * node from the list.
-	 * @throws IndexOutOfBoundsException if there
-	 * are no nodes in the list.
-	 */
-	public void removeFromFront() throws IndexOutOfBoundsException {
-		this.remove(0);
-	}
-	
-	/**
-	 * Mutator method designed to remove the
-	 * last node from the list.
-	 * @throws IndexOutOfBoundsException if there
-	 * are no nodes in the list.
-	 */
-	public void removeFromBack() throws IndexOutOfBoundsException {
-		this.remove(size - 1);
-	}
-	
-	/**
 	 * Mutator method designed to clear the entire linked list.
 	 */
+	@Override
 	public void clear() {
 		this.head = null;
 		this.size = 0;
 	}
-
+	
+	/**
+	 * Accessor method used to determine whether the
+	 * given reference is found to be equal in value to
+	 * any elements currently in the list.
+	 * @param object Object reference to check to be
+	 * equal in value with any elements stored inside
+	 * of the list.
+	 * @return boolean value determining whether the
+	 * given reference is found to be equal in value to
+	 * any elements currently in the list.
+	 */
+	@Override
+	public boolean contains(Object object) {
+		for(T data : this) {
+			if(object.equals(data)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Accessor method used to get an
+	 * element from the list.
+	 * @return Shallow copy of a generic
+	 * type T containing the first element
+	 * in the list.
+	 */
+	@Override
+	public T get() {
+		return this.head.data;
+	}
+	
+	/**
+	 * Accessor method used to get
+	 * the element at the given index
+	 * inside of the list.
+	 * @param index integer value containing the
+	 * index of the element to return.
+	 * @return Shallow copy of a generic type
+	 * T containing the element at the given
+	 * index.
+	 * @throws IndexOutOfBoundsException
+	 * if the given index is out of bounds
+	 * for the list.
+	 */
+	@Override
+	public T get(int index) throws IndexOutOfBoundsException {
+		if(index < 0 || index >= this.size) {
+			throw new IndexOutOfBoundsException();
+		}
+		Node<T> pointer = null;
+		T returnData = null;
+		for(int index2 = 0; index2 < index; index2++) {
+			pointer = (pointer == null)
+					? this.head : pointer.next;
+		}
+		if(pointer == null) {
+			returnData = this.head.data;
+		}else {
+			returnData = pointer.next.data;
+		}
+		
+		return returnData;
+	}
+	
+	/**
+	 * Accessor method used to get the index
+	 * of the first object equal in value to
+	 * the given method.
+	 * @param object Object reference to check
+	 * to be equal in value to elements inside
+	 * of the list.
+	 * @return integer value containing the index
+	 * of the first element equal in value to the
+	 * given reference. If no elements are equal
+	 * in value or the list is empty, -1 is returned.
+	 */
+	@Override
+	public int indexOf(Object object) {
+		int index = 0;
+		for(T data : this) {
+			if(object.equals(data)) {
+				return index;
+			}
+			index++;
+		}
+		return -1;
+	}
+	
 	/**
 	 * Accessor method designed to get a
 	 * LinkedIterator object at the
@@ -347,6 +375,137 @@ public class SinglyLinkedList<T> implements Iterable<T> {
 	@Override
 	public Iterator<T> iterator() {
 		return new LinkedIterator();
+	}
+	
+	/**
+	 * Accessor method used to get whether the
+	 * list is empty.
+	 * @return boolean value determining whether
+	 * the current list is empty.
+	 */
+	@Override
+	public boolean isEmpty() {
+		return (this.size == 0);
+	}
+	
+	/**
+	 * Mutator method used to remove an element from
+	 * the front of the list.
+	 * @return Shallow copy of a generic type T containing
+	 * the element removed at the front of the list.
+	 * @throws IndexOutOfBoundsException
+	 * if the list is empty.
+	 */
+	@Override
+	public T remove() throws IndexOutOfBoundsException {
+		return this.removeFromFront();
+	}
+	
+	/**
+	 * Mutator method designed to remove the node at
+	 * the given index from the linked list.
+	 * @param index integer value containing
+	 * the index to remove
+	 * @return Generic reference type T containing the
+	 * data of the removed node.
+	 * @throws IndexOutOfBoundsException if the
+	 * given index is out of range [0, size)
+	 */
+	@Override
+	public T remove(int index) throws IndexOutOfBoundsException {
+		if(index < 0 || index > size - 1) {
+			throw new IndexOutOfBoundsException();
+		}
+		
+		Node<T> pointer = null;
+		T returnData = null;
+		
+		for(int index2 = 0; index2 < index; index2++) {
+			pointer = (pointer == null)
+					? this.head : pointer.next;
+		}
+		//index 0, so remove current head
+		if(pointer == null) {
+			returnData = this.head.data;
+			this.head = this.head.next;
+		}else {
+			returnData = pointer.next.data;
+			pointer.next = pointer.next.next;
+		}
+		this.size--;
+		
+		return returnData;
+	}
+	
+	/**
+	 * Mutator method designed to remove the head
+	 * node from the list.
+	 * @return Generic reference type T containing the
+	 * data of the removed node.
+	 * @throws IndexOutOfBoundsException if there
+	 * are no nodes in the list.
+	 */
+	public T removeFromFront() throws IndexOutOfBoundsException {
+		return this.remove(0);
+	}
+	
+	/**
+	 * Mutator method designed to remove the
+	 * last node from the list.
+	 * @return Generic reference type T containing the
+	 * data of the removed node.
+	 * @throws IndexOutOfBoundsException if there
+	 * are no nodes in the list.
+	 */
+	public T removeFromBack() throws IndexOutOfBoundsException {
+		return this.remove(size - 1);
+	}
+	
+	/**
+	 * Abstract method used to set the element at the
+	 * beginning of the list with the given element.
+	 * @param element Generic type reference containing
+	 * the element to set at the end of the list.
+	 * @return Shallow copy of a generic type T containing
+	 * the element formerly at the end of the list.
+	 * @throws IndexOutOfBoundsException if the given index
+	 * is out of bounds for the list.
+	 */
+	@Override
+	public T set(T element) throws IndexOutOfBoundsException {
+		return this.set(0, element);
+	}
+	
+	/**
+	 * Mutator method used to set the element at the
+	 * given index with the given element.
+	 * @param index integer value containing the index
+	 * of the element to replace.
+	 * @param element Generic type reference containing
+	 * the element to set at the end of the list.
+	 * @return Shallow copy of a generic type T containing
+	 * the element formerly at the end of the list.
+	 * @throws IndexOutOfBoundsException if the given index
+	 * is out of bounds for the list.
+	 */
+	@Override
+	public T set(int index, T element) throws IndexOutOfBoundsException {
+		Node<T> node = new Node<>(element, this.head.next);
+		T returnData = this.head.data;
+		this.head = node;
+		
+		return returnData;
+	}
+	
+	/**
+	 * Accessor method used to get the
+	 * size of the linked list.
+	 * @return integer value containing
+	 * the size of the linked list.
+	 */
+	@Override
+	public int size() {
+		return this.size;
 	}
 	
 	/**
