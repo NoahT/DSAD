@@ -467,12 +467,12 @@ public class SinglyLinkedList<T> implements List<T> {
 	}
 	
 	/**
-	 * Abstract method used to set the element at the
+	 * Accessor method used to set the element at the
 	 * beginning of the list with the given element.
 	 * @param element Generic type reference containing
-	 * the element to set at the end of the list.
+	 * the element to set at the beginning of the list.
 	 * @return Shallow copy of a generic type T containing
-	 * the element formerly at the end of the list.
+	 * the element formerly at the beginning of the list.
 	 * @throws IndexOutOfBoundsException if the given index
 	 * is out of bounds for the list.
 	 */
@@ -482,14 +482,28 @@ public class SinglyLinkedList<T> implements List<T> {
 	}
 	
 	/**
+	 * Accessor method used to set the element at the
+	 * end of the list with the given element.
+	 * @param element Generic type reference containing
+	 * the element to set at the end of the list.
+	 * @return Shallow copy of a generic type T containing
+	 * the element formerly at the end of the list.
+	 * @throws IndexOutOfBoundsException if the given index
+	 * is out of bounds for the list.
+	 */
+	public T setEnd(T element) throws IndexOutOfBoundsException {
+		return this.set(this.size - 1, element);
+	}
+	
+	/**
 	 * Mutator method used to set the element at the
 	 * given index with the given element.
 	 * @param index integer value containing the index
 	 * of the element to replace.
 	 * @param element Generic type reference containing
-	 * the element to set at the end of the list.
+	 * the element to set at the given index of the list.
 	 * @return Shallow copy of a generic type T containing
-	 * the element formerly at the end of the list.
+	 * the element formerly at the given index of the list.
 	 * @throws IndexOutOfBoundsException if the given index
 	 * is out of bounds for the list.
 	 */
