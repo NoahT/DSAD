@@ -300,10 +300,27 @@ public class SinglyLinkedList<T> implements List<T> {
 	 * @return Shallow copy of a generic
 	 * type T containing the first element
 	 * in the list.
+	 * @throws IndexOutOfBoundsException
+	 * if the given index is out of bounds
+	 * for the list.
 	 */
 	@Override
-	public T get() {
-		return this.head.data;
+	public T get() throws IndexOutOfBoundsException {
+		return this.get(0);
+	}
+	
+	/**
+	 * Accessor method used to get an
+	 * element from the back of the list.
+	 * @return Shallow copy of a generic
+	 * type T containing the last element
+	 * in the list.
+	 * @throws IndexOutOfBoundsException
+	 * if the given index is out of bounds
+	 * for the list.
+	 */
+	public T getFromBack() throws IndexOutOfBoundsException {
+		return this.get(this.size - 1);
 	}
 	
 	/**
@@ -398,7 +415,19 @@ public class SinglyLinkedList<T> implements List<T> {
 	 */
 	@Override
 	public T remove() throws IndexOutOfBoundsException {
-		return this.removeFromFront();
+		return this.remove(0);
+	}
+	
+	/**
+	 * Mutator method designed to remove the
+	 * last node from the list.
+	 * @return Generic reference type T containing the
+	 * data of the removed node.
+	 * @throws IndexOutOfBoundsException if there
+	 * are no nodes in the list.
+	 */
+	public T removeFromBack() throws IndexOutOfBoundsException {
+		return this.remove(size - 1);
 	}
 	
 	/**
@@ -435,30 +464,6 @@ public class SinglyLinkedList<T> implements List<T> {
 		this.size--;
 		
 		return returnData;
-	}
-	
-	/**
-	 * Mutator method designed to remove the head
-	 * node from the list.
-	 * @return Generic reference type T containing the
-	 * data of the removed node.
-	 * @throws IndexOutOfBoundsException if there
-	 * are no nodes in the list.
-	 */
-	public T removeFromFront() throws IndexOutOfBoundsException {
-		return this.remove(0);
-	}
-	
-	/**
-	 * Mutator method designed to remove the
-	 * last node from the list.
-	 * @return Generic reference type T containing the
-	 * data of the removed node.
-	 * @throws IndexOutOfBoundsException if there
-	 * are no nodes in the list.
-	 */
-	public T removeFromBack() throws IndexOutOfBoundsException {
-		return this.remove(size - 1);
 	}
 	
 	/**
@@ -509,6 +514,23 @@ public class SinglyLinkedList<T> implements List<T> {
 	}
 	
 	/**
+	 * Accessor method used to get the
+	 * list as an Array.
+	 * @return Array of basetype T, where
+	 * each element is a shallow copy.
+	 */
+	@Override
+	public T[] toArray() {
+		T[] returnArray = (T[]) new Object[this.size];
+		
+		for(int index = 0; index < this.size; index++) {
+			returnArray[index] = this.get(index);
+		}
+		
+		return returnArray;
+	}
+	
+	/**
 	 * Overridden method from Object class.
 	 * Used to get a String object containing 
 	 * information about each node in the linked
@@ -529,3 +551,4 @@ public class SinglyLinkedList<T> implements List<T> {
 		return returnString;
 	}
 }
+
