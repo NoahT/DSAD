@@ -566,6 +566,37 @@ public class SinglyLinkedList<T> implements List<T> {
 	
 	/**
 	 * Overridden method from Object class.
+	 * Used to check whether the given reference
+	 * has nodes equal in value and order to the
+	 * current instance.
+	 * @param obj Object reference with actual type
+	 * SinglyLinkedList
+	 * @return boolean value determining whether the
+	 * given reference has nodes equal in value and
+	 * order to the current instance.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof SinglyLinkedList)) {
+			return false;
+		}
+		SinglyLinkedList<?> listObj = (SinglyLinkedList<?>) obj;
+		
+		if(this.size != listObj.size()) {
+			return false;
+		}
+		
+		for(int index = 0; index < this.size; index++) {
+			if(!(this.get(index).equals(listObj.get(index)))) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Overridden method from Object class.
 	 * Used to get a String object containing 
 	 * information about each node in the linked
 	 * list.
