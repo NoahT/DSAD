@@ -509,9 +509,29 @@ public class SinglyLinkedList<T> implements List<T> {
 	 */
 	@Override
 	public T set(int index, T element) throws IndexOutOfBoundsException {
-		Node<T> node = new Node<>(element, this.head.next);
-		T returnData = this.head.data;
-		this.head = node;
+		if(index < 0 || index > this.size - 1) {
+			throw new IndexOutOfBoundsException();
+		}
+		
+		Node<T> node = new Node<>(element, null),
+				pointer = null;
+		T returnData = null;
+		
+		for(int index2 = 0; index2 < index; index2++) {
+			pointer = (pointer == null)
+					? this.head : pointer.next;
+		}
+		
+		//pointer is null, set at head
+		if(pointer == null) {
+			returnData = this.head.data;
+			node.next = this.head.next;
+			this.head = node;
+		}else {
+			returnData = pointer.next.data;
+			node.next = pointer.next.next;
+			pointer.next = node;
+		}
 		
 		return returnData;
 	}
