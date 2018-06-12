@@ -173,5 +173,13 @@ public interface List<T> extends Iterable<T> {
 	 * list.
 	 */
 	public int size();
+	
+	/**
+	 * Abstract method used to get an array of the 
+	 * current list.
+	 * @return Array of basetype T containing all of
+	 * the elements from the list.
+	 */
+	public T[] toArray();
 }
 
