@@ -70,7 +70,7 @@ public class ArrayList<T> implements List<T> {
 		if(this.size == this.list.length) {
 			this.reallocate();
 		}
-		this.list[this.size++] = element;
+		this.add(this.size++, element);
 	}
 
 	/**
@@ -85,6 +85,10 @@ public class ArrayList<T> implements List<T> {
 	 */
 	@Override
 	public void add(int index, T element) throws IndexOutOfBoundsException {
+		//if not in range
+		if(index < 0 || index >= this.list.length) {
+			throw new IndexOutOfBoundsException();
+		}
 		//reallocate if necessary
 		if(this.size == this.list.length) {
 			this.reallocate();
@@ -98,28 +102,60 @@ public class ArrayList<T> implements List<T> {
 		this.list[index] = element;
 	}
 
+	/**
+	 * Method designed to clear all elements
+	 * from the current list.
+	 */
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		this.list = (T[]) new Object[this.list.length];
 	}
 
+	/**
+	 * Method designed to check whether the
+	 * given reference is equal in value to any
+	 * element in the array.
+	 * @param object Object reference to check
+	 * to be equal in value
+	 * @return boolean value determining whether
+	 * the given reference is equal in value to
+	 * any element in the array
+	 */
 	@Override
 	public boolean contains(Object object) {
-		// TODO Auto-generated method stub
+		for(T element : this.list) {
+			if(object.equals(element)) {
+				//TODO implement iterator & use this
+				return true;
+			}
+		}
 		return false;
 	}
 
+	/**
+	 * Method designed to get the first element
+	 * inside of the list.
+	 * @return Generic type containing the first
+	 * element inside of the list.
+	 */
 	@Override
-	public T get() {
-		// TODO Auto-generated method stub
-		return null;
+	public T get() throws IndexOutOfBoundsException {
+		return this.get(0);
 	}
 
+	/**
+	 * Method designed to get the element
+	 * at the specified index.
+	 * @param index integer value containing
+	 * the index at which to retrieve the element
+	 * @return Generic type containing the element
+	 * at the given index inside of the list.
+	 * @throws IndexOutOfBoundsException if the 
+	 * index is not in range [0, size)
+	 */
 	@Override
 	public T get(int index) throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.list[index];
 	}
 
 	@Override
