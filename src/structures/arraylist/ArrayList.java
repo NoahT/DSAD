@@ -283,34 +283,80 @@ public class ArrayList<T> implements List<T> {
 		return new ArrayIterator();
 	}
 
+	/**
+	 * Method designed to remove the last element from the
+	 * list.
+	 * @throws IndexOutOfBoundsException if the list is empty.
+	 */
 	@Override
 	public T remove() throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.remove(this.list.length - 1);
 	}
 
+	/**
+	 * Method designed to remove the specified element in the
+	 * list.
+	 * @param index integer value containing the index of the
+	 * element to remove.
+	 */
 	@Override
 	public T remove(int index) throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return null;
+		T element = this.list[index];
+		this.list[index] = null;
+		
+		//shift the list
+		for(int index2 = this.list.length - 1; index2 > index; index2--) {
+			this.list[index2 - 1] = this.list[index];
+		}
+		
+		//decrement size if removing a non-null element
+		this.size = (element != null) ? this.size-- : this.size;
+		
+		return element;
 	}
 
+	/**
+	 * Method designed to set the given element at the end of
+	 * the list.
+	 * @param element generic reference type T
+	 * @throws IndexOutOfBoundsException if the list is empty
+	 */
 	@Override
 	public T set(T element) throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.set(this.list.length - 1, element);
 	}
 
+	/**
+	 * Method designed to set the given element at the given
+	 * index.
+	 * @param index integer value containing the index of the
+	 * element to set
+	 * @param element generic reference type T
+	 * @throws IndexOutOfBoundsException if the given index is
+	 * out of range [0, size)
+	 */
 	@Override
 	public T set(int index, T element) throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return null;
+		T returnElement = this.list[index];
+		this.list[index] = element;
+		
+		//increment if setting at location of null element
+		//and not adding a null element
+		this.size = (returnElement == null
+				&& element != null) ? this.size++ : this.size;
+		
+		return returnElement;
 	}
 
+	/**
+	 * Accessor method used to get the size of the
+	 * list.
+	 * @return integer value containing the size
+	 * of the list.
+	 */
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.size;
 	}
 
 	@Override
