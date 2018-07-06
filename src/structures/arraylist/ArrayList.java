@@ -12,6 +12,86 @@ import structures.List;
  * @author Noah Teshima
  */
 public class ArrayList<T> implements List<T> {
+	
+	/**
+	 * Private inner class used to iterate
+	 * over elements in the instance's list.
+	 * @author Noah Teshima
+	 */
+	private class ArrayIterator implements Iterator<T> {
+		private int index;
+		
+		/**
+		 * Default constructor used to
+		 * create an iterator at the beginning
+		 * of the list.
+		 * @throws IndexOutOfBoundsException if the
+		 * given index is out of range (0, size],
+		 * where size is the number of elements
+		 * stored.
+		 */
+		public ArrayIterator() throws IndexOutOfBoundsException {
+			this(0);
+		}
+		
+		/**
+		 * Constructor used to create an iterator
+		 * starting at the specified index.
+		 * @param index integer value containing
+		 * the starting index for the iterator.
+		 * @throws IndexOutOfBoundsException if the
+		 * given index is out of range (0, size],
+		 * where size is the number of elements
+		 * stored.
+		 */
+		public ArrayIterator(int index) throws IndexOutOfBoundsException {
+			if(index < 0 || index >= size) {
+				throw new IndexOutOfBoundsException();
+			}
+			this.index = index;
+		}
+		
+		/**
+		 * Method designed to determine whether
+		 * there is another element to iterate
+		 * over.
+		 * @return boolean value determining whether
+		 * another element can be iterated over.
+		 */
+		@Override
+		public boolean hasNext() {
+			return this.index < (list.length - 1);
+		}
+
+		/**
+		 * Method designed to iterate over the
+		 * next element in the list, while returning
+		 * the previous element.
+		 * @return Generic type object containing the
+		 * previous element iterated over.
+		 */
+		@Override
+		public T next() {
+			T returnElement = list[this.index];
+			this.skipIndex();
+			
+			return returnElement;
+		}
+		
+		/**
+		 * Private method designed to skip the index
+		 * to the next valid element.
+		 */
+		private void skipIndex() {
+			this.index++;
+			if(this.hasNext()
+					&& list[this.index] == null) {
+				this.skipIndex();
+			}
+		}
+		
+	}
+	
 	private static final int DEFAULT_CAPACITY = 10;
 	private T[] list;
 	private int size;
@@ -158,22 +238,49 @@ public class ArrayList<T> implements List<T> {
 		return this.list[index];
 	}
 
+	/**
+	 * Method designed to retrieve the
+	 * index of the first element equal
+	 * in value to the given reference.
+	 * @param object Object reference
+	 * used to check to be equal in value
+	 * @return integer value containing the
+	 * first index of the element equal in
+	 * value to the given reference.
+	 */
 	@Override
 	public int indexOf(Object object) {
-		// TODO Auto-generated method stub
-		return 0;
+		for(int index = 0; index < this.size; index++) {
+			if(object.equals(this.list[index])) {
+				return index;
+			}
+		}
+		//if not found
+		return -1;
 	}
 
+	/**
+	 * Method designed to check whether
+	 * the list has any elements.
+	 * @return boolean value determining
+	 * whether the list is empty.
+	 */
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return (this.size == 0);
 	}
 
+	/**
+	 * Method designed to instantiate
+	 * and return a new Iterator object
+	 * for iterating over each element
+	 * in the current list.
+	 * @return Iterator object with basetype
+	 * T
+	 */
 	@Override
 	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayIterator();
 	}
 
 	@Override
