@@ -117,8 +117,11 @@ public class SinglyLinkedList<T> implements List<T> {
 		 * Default constructor used
 		 * to place a pointer at
 		 * the head of the linked list.
+		 * @throws IndexOutOfBoundsException if the
+		 * given index is out of range (0, size],
+		 * where size is the number of nodes
 		 */
-		public LinkedIterator() {
+		public LinkedIterator() throws IndexOutOfBoundsException {
 			this(0);
 		}
 		
